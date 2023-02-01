@@ -8,8 +8,8 @@
 
 ---
 
-![Weekly Language Stats](https://raw.githubusercontent.com/dvjn/wakatime-charts/master/images/wakatime_weekly_language_stats.svg "Weekly Language Stats")
-![Weekly Project Stats](https://raw.githubusercontent.com/dvjn/wakatime-charts/master/images/wakatime_weekly_project_stats.svg "Weekly Project Stats")
+![Weekly Language Stats](https://raw.githubusercontent.com/zo-ly/zo-ly/main/images/wakatime_weekly_language_stats.svg "Weekly Language Stats")
+![Weekly Language Stats](https://raw.githubusercontent.com/zo-ly/zo-ly/main/images/wakatime_weekly_language_stats_dark.svg "Weekly Language Stats Dark")
 
 </div>
 
@@ -38,7 +38,7 @@
        name: Update wakatime stats charts
        runs-on: ubuntu-latest
        steps:
-         - uses: dvjn/wakatime-charts@master
+         - uses: zo-ly/wakatime-charts@master
            with:
              WAKATIME_API_KEY: ${{ secrets.WAKATIME_API_KEY }}
              GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # only required if using the action in repository other than profile
@@ -61,7 +61,7 @@
 Link for the generated images is:
 `https://raw.githubusercontent.com/<username>/<repository>/<branch_name>/<images_folder>/<chart_name>.svg`
 
-Where, the chart name is one of `wakatime_weekly_language_stats` and `wakatime_weekly_project_stats`.
+Where, the chart name is one of `wakatime_weekly_language_stats` and `wakatime_weekly_language_stats_dark` .
 
 ## Inspiration 😍
 

@@ -27,7 +27,7 @@ const makeVirtualDom = () => {
   return { document, body };
 };
 
-const drawStatsChart = (body, { title, data, fill, measurements = {} }) => {
+const drawStatsChart = (body, { isDark, data, fill, measurements = {} }) => {
   const {
     svgWidth = 540,
     svgHeight = 175,
@@ -48,9 +48,8 @@ const drawStatsChart = (body, { title, data, fill, measurements = {} }) => {
   const chartWidth = contentWidth - chartX + margin;
 
   const headerY = margin;
-  const headerHeight = 18 + padding;
-  const statsY = headerY + headerHeight;
-  const statsHeight = contentHeight - headerHeight;
+  const statsY = headerY;
+  const statsHeight = contentHeight;
 
   // SVG
 
@@ -74,8 +73,8 @@ const drawStatsChart = (body, { title, data, fill, measurements = {} }) => {
     .attr("x", 1)
     .attr("y", 1)
     .attr("rx", 4.5)
-    .attr("stroke", "rgb(228,226,226)")
-    .attr("fill", "rgb(255,254,254)")
+    .attr("stroke", isDark ? "#0D1116" : "#FFFFFF")
+    .attr("fill", isDark ? "#0D1116" : "#FFFFFF")
     .attr("stroke-opacity", 1);
 
   // Header
@@ -83,9 +82,7 @@ const drawStatsChart = (body, { title, data, fill, measurements = {} }) => {
   svg
     .append("text")
     .attr("transform", `translate(${margin} ${headerY})`)
-    .attr("class", "titleText")
     .attr("dominant-baseline", "hanging")
-    .html(title);
 
   // Y axis scaling
 
@@ -102,11 +99,11 @@ const drawStatsChart = (body, { title, data, fill, measurements = {} }) => {
     .attr("id", "overflowGradient");
   overflowGradient
     .append("stop")
-    .attr("stop-color", "rgba(254, 254, 254, 0)")
+    .attr("stop-color", isDark ? 'rgba(13, 17, 23, 0)' : 'rgba(254, 254, 254, 0)')
     .attr("offset", "0");
   overflowGradient
     .append("stop")
-    .attr("stop-color", "rgba(255, 254, 254, 1)")
+    .attr("stop-color", isDark ? 'rgba(13, 17, 23, 0)' : 'rgba(254, 254, 254, 0)')
     .attr("offset", "1");
 
   // Names
@@ -209,10 +206,9 @@ const drawStatsChart = (body, { title, data, fill, measurements = {} }) => {
   // Styles
 
   svg.append("style").html(`
-    text { font: 600 14px 'Segoe UI', Ubuntu, Sans-Serif; fill: #333333 }
+    text { font: 600 14px 'Segoe UI', Ubuntu, Sans-Serif; fill: ${isDark ? '#c9d1d9' : '#333333'} }
     .nameText, .durationText { opacity: 0; animation: fadeInAnimation 0.5s ease-in-out forwards; }
     .durationBar { transform: scaleX(0); animation: scaleXInAnimation 0.5s ease-in-out forwards; }
-    .titleText { font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif; fill: #2f80ed; animation: fadeInAnimation 0.8s ease-in-out forwards; }
     @keyframes fadeInAnimation {
       0%   { opacity: 0; }
       100% { opacity: 1; }
@@ -227,39 +223,24 @@ const drawStatsChart = (body, { title, data, fill, measurements = {} }) => {
 const saveChart = (body, filename) =>
   fs.writeFileSync(filename, body.node().innerHTML);
 
-const generateLanguageStatsChart = (data) => {
+const generateLanguageStatsChart = (data, isDark) => {
   const languageColors = JSON.parse(fs.readFileSync("colors.json", "utf-8"));
 
   const { body } = makeVirtualDom();
 
   drawStatsChart(body, {
-    title: "Weekly Language Stats",
+    isDark,
     data: data.languages.slice(0, 5),
     fill: (datum) =>
-      languageColors[datum.name] ? languageColors[datum.name].color : "#333333",
+      languageColors[datum.name] ? languageColors[datum.name].color : "#58a6ff",
   });
 
-  saveChart(body, "generated/wakatime_weekly_language_stats.svg");
-};
-
-const generateProjectStatsChart = (data) => {
-  const { body } = makeVirtualDom();
-
-  drawStatsChart(body, {
-    title: "Weekly Project Stats",
-    data: data.projects.slice(0, 5),
-    fill: "#438cee",
-    measurements: {
-      namesWidth: 150,
-    },
-  });
-
-  saveChart(body, "generated/wakatime_weekly_project_stats.svg");
+  saveChart(body, `generated/wakatime_weekly_language_stats${isDark ? '_dark' : ''}.svg`);
 };
 
 (async () => {
   createGeneratedDirectory();
   const data = await getStatsData();
   generateLanguageStatsChart(data);
-  generateProjectStatsChart(data);
+  generateLanguageStatsChart(data, true);
 })();
