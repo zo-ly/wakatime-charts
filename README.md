@@ -46,7 +46,7 @@
 
 5. Commit this workflow file.
 
-**Note:** The action will run at 00:00 UTC everyday to update the images.
+**Note:** The action will run at 10:00 UTC everyday to update the images.
 
 ### Other Parameters 🔧
 
