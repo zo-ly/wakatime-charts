@@ -31,7 +31,7 @@
    on:
      workflow_dispatch:
      schedule:
-       - cron: "0 0 * * *"
+       - cron: "0 10 * * *"
 
    jobs:
      update-charts:
