@@ -73,8 +73,8 @@ const drawStatsChart = (body, { isDark, data, fill, measurements = {} }) => {
     .attr("x", 1)
     .attr("y", 1)
     .attr("rx", 4.5)
-    .attr("stroke", isDark ? "#0D1116" : "#FFFFFF")
-    .attr("fill", isDark ? "#0D1116" : "#FFFFFF")
+    .attr("stroke", isDark ? "#22272e" : "#FFFFFF")
+    .attr("fill", isDark ? "#22272e" : "#FFFFFF")
     .attr("stroke-opacity", 1);
 
   // Header
