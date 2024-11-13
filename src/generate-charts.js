@@ -230,7 +230,7 @@ const generateLanguageStatsChart = (data, isDark) => {
 
   drawStatsChart(body, {
     isDark,
-    data: data.languages.slice(0, 5),
+    data: data.languages.filter(l => l.total_seconds >= 60).slice(0, 5),
     fill: (datum) =>
       languageColors[datum.name] ? languageColors[datum.name].color : "#58a6ff",
   });
