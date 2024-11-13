@@ -699,6 +699,10 @@
         "color": "#40d47e",
         "url": "https://github.com/trending?l=JSONiq"
     },
+    "JSON": {
+        "color": "#f1e05a",
+        "url": "https://github.com/trending?l=JSON"
+    },
     "Jsonnet": {
         "color": "#0064bd",
         "url": "https://github.com/trending?l=Jsonnet"
