@@ -130,7 +130,7 @@ const drawStatsChart = (body, { isDark, data, fill, measurements = {} }) => {
     .attr("y", (datum) => yScale.bandwidth() / 2 + yScale(datum.name))
     .attr("dominant-baseline", "middle")
     .attr("style", (_, i) => `animation-delay: ${500 + i * 250}ms`)
-    .html((datum) => datum.name);
+    .html((datum) => datum.name.split(' ')[0]);
 
   svg
     .append("rect")
@@ -232,7 +232,7 @@ const generateLanguageStatsChart = (data, isDark) => {
     isDark,
     data: data.languages.filter(l => l.total_seconds >= 60).slice(0, 5),
     fill: (datum) =>
-      languageColors[datum.name] ? languageColors[datum.name].color : "#58a6ff",
+      languageColors[datum.name] ? languageColors[datum.name].color : "#7d7d7d",
   });
 
   saveChart(body, `generated/wakatime_weekly_language_stats${isDark ? '_dark' : ''}.svg`);
